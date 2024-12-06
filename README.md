@@ -38,4 +38,5 @@ Results are evaluated based on BLEU scores and loss. Detailed analysis can be fo
 3. Run the training script:
    python train.py
 
-Author: [Jonathan Wang, Conny Zhou]
+## Author: 
+[Jonathan Wang, Conny Zhou]
