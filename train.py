@@ -9,7 +9,7 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import gc
 
-from model.model.Transformer import Transformer
+from Transformer.model.Transformer import Transformer
 from utils.DataSummary import dataset_summary
 from utils.loader_factory import get_loader_and_dataloaders
 from utils.tools import idx_to_word, get_bleu
@@ -34,7 +34,7 @@ class FocalLoss(nn.Module):
     def forward(self, logits, targets):
         """
         Args:
-            logits: Tensor of shape (batch_size, num_classes) containing model outputs.
+            logits: Tensor of shape (batch_size, num_classes) containing Transformer outputs.
             targets: Tensor of shape (batch_size,) containing ground truth labels.
         Returns:
             Computed Focal Loss value.
@@ -79,7 +79,7 @@ def repeated_token_loss(output, trg, vocab_size, alpha=1.0):
     Computes a penalty for repeated tokens in the output compared to the target.
 
     Args:
-        output: Tensor of shape (batch_size, seq_len, vocab_size), model output logits.
+        output: Tensor of shape (batch_size, seq_len, vocab_size), Transformer output logits.
         trg: Tensor of shape (batch_size, seq_len), target token IDs.
         vocab_size: Size of the vocabulary.
         alpha: Scaling factor for the repetition penalty.
@@ -322,8 +322,8 @@ if __name__ == '__main__':
     pad_token = loader.source_vocab["<pad>"]
 
 
-    # Model definition (assumes a Transformer model class exists)
-    # model = TransformerModelBenchmark(
+    # Model definition (assumes a Transformer Transformer class exists)
+    # Transformer = TransformerModelBenchmark(
     #     src_vocab_size=enc_vocab_size,
     #     trg_vocab_size=dec_vocab_size,
     #     emb_dim=d_model,
@@ -335,7 +335,7 @@ if __name__ == '__main__':
     #     max_len=max_len
     # ).to(device)
 
-    # Define the model
+    # Define the Transformer
     model = Transformer(
         src_vocab_size=len(loader.source_vocab),
         trg_vocab_size=len(loader.target_vocab),
@@ -348,7 +348,7 @@ if __name__ == '__main__':
         max_len=max_len,
     ).to(device)
 
-    print(f'The model has {count_parameters(model):,} trainable parameters')
+    print(f'The Transformer has {count_parameters(model):,} trainable parameters')
     model.apply(initialize_weights)
 
     # Define optimizer, scheduler, and criterion
@@ -383,14 +383,14 @@ if __name__ == '__main__':
         valid_losses.append(valid_loss)
         bleu_scores.append(bleu)
 
-        # Save the best model
+        # Save the best Transformer
         if valid_loss < best_loss:
             best_loss = valid_loss
-            torch.save(model.state_dict(), f"saved/model-{valid_loss:.4f}.pt")
+            torch.save(model.state_dict(), f"saved/Transformer-{valid_loss:.4f}.pt")
         print(
             f"Epoch {epoch + 1}/{total_epoch}: Train Loss: {train_loss:.4f}, Val Loss: {valid_loss:.4f}, BLEU: {bleu:.4f}")
 
-    print("\nTesting the model...")
+    print("\nTesting the Transformer...")
     test_loss, test_bleu = evaluate(model, test_loader, criterion, loader.reverse_target_vocab)
     print(f"Test Loss: {test_loss:.4f}, Test BLEU: {test_bleu:.4f}")
 
@@ -410,10 +410,10 @@ def run_with_test(total_epoch, best_loss=float("inf")):
         valid_losses.append(valid_loss)
         bleu_scores.append(bleu)
 
-        # Save the best model
+        # Save the best Transformer
         if valid_loss < best_loss:
             best_loss = valid_loss
-            torch.save(model.state_dict(), f"saved/model-{valid_loss:.4f}.pt")
+            torch.save(model.state_dict(), f"saved/Transformer-{valid_loss:.4f}.pt")
 
 
         epoch_mins, epoch_secs = divmod(end_time - start_time, 60)
@@ -425,7 +425,7 @@ def run_with_test(total_epoch, best_loss=float("inf")):
     plot_loss_curve(train_losses, valid_losses, bleu_scores)
 
     # Test Phase
-    print("\nTesting the model on the test set...")
+    print("\nTesting the Transformer on the test set...")
     test_loss, test_bleu_score = test_bleu(model, test_loader, criterion)  # Avoid shadowing the function
     print(f"Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):.3f}")
     print(f"Test BLEU Score: {test_bleu_score:.3f}")

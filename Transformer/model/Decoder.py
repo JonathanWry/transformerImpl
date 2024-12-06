@@ -1,6 +1,6 @@
 from torch import nn
 
-from model.block.DecoderLayer import DecoderLayer
+from Transformer.block.DecoderLayer import DecoderLayer
 
 
 class Decoder(nn.Module):

@@ -3,7 +3,7 @@ import math
 import torch
 from torch import nn
 
-from model.embedding.PositionalEncoding import PositionalEncoding
+from Transformer.embedding.PositionalEncoding import PositionalEncoding
 
 
 class TransformerModelBenchmark(nn.Module):

@@ -2,9 +2,9 @@ import torch
 from torch import nn
 import math
 
-from model.embedding.PositionalEncoding import PositionalEncoding
-from model.model.Decoder import Decoder
-from model.model.Encoder import Encoder
+from Transformer.embedding.PositionalEncoding import PositionalEncoding
+from Transformer.model.Decoder import Decoder
+from Transformer.model.Encoder import Encoder
 
 
 class Transformer(nn.Module):

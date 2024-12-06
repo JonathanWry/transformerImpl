@@ -1,8 +1,8 @@
 from torch import nn
 import math
-from model.layer.LayerNorm import LayerNorm
-from model.layer.MultiHeadAttention import MultiHeadAttention
-from model.layer.PositionwiseFeedForward import PositionwiseFeedForward
+from Transformer.layer.LayerNorm import LayerNorm
+from Transformer.layer.MultiHeadAttention import MultiHeadAttention
+from Transformer.layer.PositionwiseFeedForward import PositionwiseFeedForward
 
 
 class DecoderLayer(nn.Module):
